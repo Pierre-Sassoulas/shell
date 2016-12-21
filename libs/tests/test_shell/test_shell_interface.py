@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from shell import Color, ShellColor, ShellInterface, Style
+from libs.shell import Color, ShellColor, ShellInterface, Style
 from django.test.testcases import TestCase
-from shell.shell_interface import MAXIMUM_TIME_WITHOUT_FEEDBACK
+from libs.shell.shell_interface import MAXIMUM_TIME_WITHOUT_FEEDBACK
 from shell_const import COLORS, STYLES
 import time
 

@@ -1,7 +1,6 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from shell import Color, ShellColor, Style
+from libs.shell import Color, ShellColor, Style
 from django.test.testcases import TestCase
 from shell_const import COLORS, STYLES
 
