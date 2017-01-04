@@ -1,51 +1,14 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """
 .. module:: ShellInterface
 :platform: Unix
-:synopsis: Shellinterface implement a colorful text in shell and implement a special progressbar
-who may or may not appear depending on the time you have to wait
-
-.. moduleauthor:: Pierre Sassoulas <pierre.sassoulas@gmail.com>
+:synopsis: Shellinterface implement a colorful text in shell.
 """
 
-from color import Color
-from progressbar import ProgressBar, AnimatedMarker, Percentage, ETA, RotatingMarker, Bar
-from shell_color import ShellColor
-from style import Style
-import time
-
-MAXIMUM_TIME_WITHOUT_FEEDBACK = 0.5
-MAXVAL = 100
-
-# This is a widget (see the ProgressBar module for more detail),
-# you can add whatever you like in it.
-
-complete_widgets = [
-    ShellColor(Color.WHITE, Style.BOLD, Color.BLACK).color,
-    'Please wait ',
-    AnimatedMarker(),
-    ' ',
-    Percentage(),
-    ' ',
-    Bar(marker=RotatingMarker()),
-    ' ',
-    ETA(),
-    ' ',
-    ShellColor().color,
-    ]
-
+from libs.shell.shell_color import ShellColor
 
 class ShellInterface(object):
-
-    def __init__(self, widgets=complete_widgets):
-        ''' Constructor ShellInterface
-            :return: A ShellInterface '''
-
-        self.__widgets = widgets
-        self.__time = None
-        self.__progress_bar = None
 
     def print_color(self, object_to_print, color):
         ''' Print a text in shell with a specific color and reset the color effect. 
@@ -55,9 +18,7 @@ class ShellInterface(object):
             :param color: A ShellColor that will be used to color the String in shell. '''
 
         class NotAShellColorException(Exception):
-
             ''' print_color Private Exception class. '''
-
             def __init__(self, not_a_ShellColor):
                 ''' :param not_a_ShellColor: An object that is not a ShellColor '''
 
@@ -68,8 +29,8 @@ class ShellInterface(object):
                 return self.message + ', use a ShellColor to print text in color.'
 
         if color.__class__.__name__ != 'ShellColor':
-            raise NotAShellColorException(color)
-
+            msg = "Got '{}' but expected 'ShellColor'".format(color.__class__)
+            raise TypeError(msg)
         try:
             text_to_print = str(object_to_print)
         except:
@@ -84,39 +45,3 @@ class ShellInterface(object):
         recolored_text = text_to_print.replace(ShellColor().color, ShellColor().color
                                                + color.color)
         print(color.get_colored_text(recolored_text))
-
-    def start_progress_bar(self):
-        ''' Start a progress bar in shell. It won't print anything before it have to. '''
-
-        self.__time = time.time()
-
-    def update_progress_bar(self, percentage):
-        ''' Display the progress bar or not taking account of the percentage 
-            and the time since the beginning.
-            :param percentage: The percentage the actual task has reached.  '''
-
-        if self.__progress_bar == None:
-            if self.__time == None:
-                raise RuntimeError('Uninitialized progress bar in ShellInterface')
-            elif time.time() - self.__time < MAXIMUM_TIME_WITHOUT_FEEDBACK:
-
-                # We consider that the treatment is done instantly (no unnecessary feedback)
-
-                return True
-            else:
-
-                # We need a feedback
-
-                self.__progress_bar = ProgressBar(widgets=self.__widgets, maxval=MAXVAL)
-                self.__progress_bar.start()
-        self.__progress_bar.update(percentage)
-
-    def finish_progress_bar(self):
-        ''' Finish the progress bar. '''
-
-        self.__time = None
-        if self.__progress_bar != None:
-            self.__progress_bar.finish()
-            self.__progress_bar = None
-
-
