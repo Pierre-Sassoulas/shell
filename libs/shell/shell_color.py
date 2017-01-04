@@ -24,48 +24,10 @@ class ShellColor(object):
         self.font_color = font_color
 
     def __eq__(self, other):
-        return True
-
-    def get_colored_text(self, text):
-        ''' Permit to get a colored text in order to print it
-        :return: A string colored in the ShellColor '''
-        return '{0}{1}{2}'.format(self, text, ShellColor())
-
-    def __define_text_style(self):
-        ''' Return the string to put in terminal in order to get the text style.
-
-        The text style is always defined, if it is not set, it reset to normal.
-        :return: A string that must not be used by other function than
-            ShellColor.color() '''
-        if self.text_color != Color.NONE or self.font_color != Color.NONE:
-            return '{0};'.format(self.text_style.value)
-        else:
-            return '{0}'.format(self.text_style.value)
-
-    def __define_font_color(self):
-        ''' Return the string to put in terminal in order to get the font color.
-            The font color may not be defined.
-
-        :return: A string that must not be used by other function than
-            ShellColor.color() '''
-        if self.font_color != Color.NONE:
-            if self.text_color != Color.NONE:
-                return '4{0};'.format(self.font_color.value)
-            else:
-                return '4{0}'.format(self.font_color.value)
-        else:
-            return ''
-
-    def __define_text_color(self):
-        ''' Return the string to put in terminal in order to get the text color.
-            The text color may not be defined.
-
-        :return: A string that must not be used by other function than
-            ShellColor.color() '''
-        if self.text_color != Color.NONE:
-            return '3{0}'.format(self.text_color.value)
-        else:
-            return ''
+        text_color = self.text_color == other.text_color
+        text_style = self.text_style == other.text_style
+        font_color = self.font_color == other.font_color
+        return text_color and text_style and font_color
 
     def __repr__(self):
         ''' To string ShellColor
@@ -76,12 +38,20 @@ class ShellColor(object):
         return self.get_colored_text(str)
     
     def __str__(self):
-        ''' To string ShellColor
-        :return: A string in color representing the ShellColor itself.'''
-        # The order here is important (or we have to modify the define_* functions)
-        result = "\033[{}{}{}m".format(
-            self.__define_text_style(),
-            self.__define_font_color(),
-            self.__define_text_color()
-        )
-        return result
+        '''A string in color to add in a terminal for ANSI coloring.'''
+        ansi_style = str(self.text_style.value)
+        if self.text_color != Color.NONE or self.font_color != Color.NONE:
+            ansi_style += ';'
+        if self.font_color != Color.NONE:
+            if self.text_color != Color.NONE:
+                ansi_style += '4{0};'.format(self.font_color.value)
+            else:
+                ansi_style += '4{0}'.format(self.font_color.value)
+        if self.text_color != Color.NONE:
+            ansi_style += '3{0}'.format(self.text_color.value)
+        return "\033[{}m".format(ansi_style)
+
+    def get_colored_text(self, text):
+        ''' Permit to get a colored text in order to print it
+        :return: A string colored in the ShellColor '''
+        return '{0}{1}{2}'.format(self, text, ShellColor())
