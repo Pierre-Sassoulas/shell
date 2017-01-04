@@ -37,9 +37,9 @@ class Test_ShellColor(TestCase):
 
     def test_print_color(self):
         ''' Test the color in shell '''
-        middle_thing = '{0}{1}{2}'.format(ShellColor(Color.RED).color,
-                                          ' another color ',
-                                          ShellColor().color)
+        middle_thing = '{0}{1}{2}'.format(ShellColor(Color.RED),
+                                          ' another ShellColor ',
+                                          ShellColor())
         shell_color = ShellColor()
         for text_color in Color:
             shell_color.text_color = text_color
@@ -49,7 +49,7 @@ class Test_ShellColor(TestCase):
                 for font_color in Color:
                     shell_color.font_color = font_color
                     color = str(shell_color)
-                    text = '{0} colored with {1} inside'.format(color, middle_thing)
+                    text = '{0}ShellColor with {1} inside'.format(color, middle_thing)
                     self.shell.print_color(text, shell_color)
         self.assertTrue(True)
 

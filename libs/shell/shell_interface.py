@@ -42,6 +42,6 @@ class ShellInterface(object):
         # inside the string we have to color while keeping the inside colored string
         #  in its color.
 
-        recolored_text = text_to_print.replace(ShellColor().color, ShellColor().color
-                                               + color.color)
+        recolored_text = text_to_print.replace(str(ShellColor()), str(ShellColor())
+                                               + str(color))
         print(color.get_colored_text(recolored_text))
