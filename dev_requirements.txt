@@ -1,0 +1,9 @@
+django
+enum34
+
+coverage
+autopep8
+django-jenkins
+flake8
+pep8
+pylint

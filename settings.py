@@ -8,7 +8,16 @@ DATABASES = {
 }
 INSTALLED_APPS = (
     'libs',
+    'django_jenkins'
+)
+
+PROJECT_APPS = ["libs"]
+
+JENKINS_TASKS = (
+    "django_jenkins.tasks.run_pylint",
+    "django_jenkins.tasks.run_pep8",
+    "django_jenkins.tasks.run_flake8",
+    "django_jenkins.tasks.run_sloccount",
 )
 
 SECRET_KEY = "ABCDEFG"
-

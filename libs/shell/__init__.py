@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from shell_interface import ShellInterface
-from shell_color import ShellColor
-from color import Color
-from style import Style
+from libs.shell.shell_color import ShellColor, print_color
+from libs.shell.color import Color
+from libs.shell.style import Style
 
-__all__ = ['ShellInterface', 'ShellColor', 'Color', 'Style']
+__all__ = ['ShellColor', 'Color', 'Style', "print_color"]

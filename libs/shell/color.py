@@ -2,10 +2,11 @@
 
 from enum import Enum
 
+
 class Color(Enum):
 
     """
-        This class can represent the text color or the font color in ShellColor.
+    This class can represent the text color or the font color in ShellColor.
     """
 
     NONE = ''

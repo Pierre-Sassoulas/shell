@@ -1,17 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from django.test.testcases import TestCase
-import time
-
-from libs.shell import Color, ShellColor, Style, ShellInterface
+from libs.shell import Color, ShellColor, Style, print_color
 
 
 class Test_ShellColor(TestCase):
 
     ''' Tests the ShellColor class '''
-
-    def setUp(self):
-        self.shell = ShellInterface()
 
     def test_str(self):
         ''' Test str ShellColor '''
@@ -22,8 +17,7 @@ class Test_ShellColor(TestCase):
                 shell_color.text_style = test_style
                 for font_color in Color:
                     shell_color.font_color = font_color
-                    spam = str(shell_color)
-                    self.assertNotEqual(spam, '')
+                    self.assertNotEqual(str(shell_color), '')
 
     def test__eq__(self):
         ''' __eq__ work as intended. '''
@@ -55,20 +49,14 @@ class Test_ShellColor(TestCase):
                     color = str(shell_color)
                     text = '{}ShellColor with {} inside'.format(color,
                                                                 middle_thing)
-                    self.shell.print_color(text, shell_color)
-        self.assertTrue(True)
+                    print_color(text, shell_color)
 
     def test_exception_print_color(self):
-        ''' Test that we can't use another object than a shell color to print with ShellInterface '''
-        # Test str of private exception NotAShellColorException
-        try:
-            self.shell.print_color('Text to print', 42)
-        except Exception, e:
-            print(e)
-        self.assertRaises(Exception, self.shell.print_color, 'Text to print', 42)
-        self.assertRaises(Exception, self.shell.print_color, 'Text to print', '42')
-        self.assertRaises(Exception, self.shell.print_color, 'Text to print', self.shell)
-        self.assertRaises(Exception, self.shell.print_color, 'Text to print', 42.73)
+        ''' We can't use another object than a shell color in print_color '''
+        self.assertRaises(TypeError, print_color, 'Text to print', 42)
+        self.assertRaises(TypeError, print_color, 'Text to print', '42')
+        self.assertRaises(TypeError, print_color, 'Text to print', 42.73)
 
     def test_print_unicode(self):
-        self.shell.print_color(u"‖This is a text in unicode‖", ShellColor())
+        """ We can print a unicode text. """
+        print_color(u"‖This is a text in unicode‖", ShellColor())

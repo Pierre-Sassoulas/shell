@@ -2,6 +2,7 @@
 
 from enum import Enum
 
+
 class Style(Enum):
 
     """
