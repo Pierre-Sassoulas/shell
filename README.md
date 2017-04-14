@@ -4,7 +4,7 @@ easier for unix users.
 The underlying mechanism is ANSI coloring. For more details on ANSI
 coloring see : https://en.wikipedia.org/wiki/ANSI_escape_code 
 
-# Creating a ShellColor
+# Creating a ShellColor
 
 ~~~~
 # No style, no text color, no font color
@@ -31,7 +31,7 @@ NONE, BOLD, LIGHT, UNDERLINE, BLINK, INVERSE, HIDDEN
 
 # Creating an ANSI colored string and printing it
 
-## Code
+## Code
 ~~~~
 from libs.shell import Color, ShellColor
 red = ShellColor(Color.RED)
@@ -40,17 +40,17 @@ text = 'Red Colorized text.'
 # First method
 print red, text, " This is red too", ShellColor() , "This isn't red anymore."
 
-# Second method
+# Second method
 print red.colorize_text(text), "This isn't red anymore."
 ~~~~
 
-## Result
+## Result
 
 ![Result of printing a colorized string](redtext_example.png "Result of printing a colorized string")
 
-# Using the 'print_color' function
+# Using the 'print_color' function
 
-## Code
+## Code
 ~~~~
 from libs.shell import Color, ShellColor, Style, print_color
 redtext = ShellColor(Color.RED).colorize_text('Red colorized text.')
