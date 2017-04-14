@@ -24,12 +24,12 @@ bold_bee = ShellColor(Color.YELLOW, Style.BOLD, Color.BLACK)
 
 NONE, BLACK, RED, GREEN, YELLOW, NAVY, PURPLE, BLUE, WHITE
 
-## Available style
+## Available style
 
 NONE, BOLD, LIGHT, UNDERLINE, BLINK, INVERSE, HIDDEN
 
 
-# Creating an ANSI colored string and printing it
+# Creating an ANSI colored string and printing it
 
 ## Code
 ~~~~
@@ -66,7 +66,7 @@ print_color(bold_bee_text, bold_bee_color)
 
 ![Result of the print_color function](bold_bee_example.png "Result of the print_color function")
 
-# History
+# History
 
 It was used first inside a django project alongside a logging configuration so
 various logging levels were easily distinguishables. It still has a dependancie
